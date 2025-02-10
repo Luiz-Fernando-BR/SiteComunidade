@@ -1,67 +1,80 @@
-{% extends 'perfil.html' %}
+{% extends 'perfil.html' %}  <!-- Herda o layout do template perfil.html -->
 
+{% block form_editar_perfil %}  <!-- Início do bloco 'form_editar_perfil', que será sobrescrito no template perfil.html -->
+<div class="container">  <!-- Container do Bootstrap para centralizar o conteúdo -->
+    <hr>  <!-- Linha horizontal para separar seções -->
+    <div class="row">  <!-- Definindo uma linha para o layout responsivo -->
+        <div class="col">  <!-- Coluna dentro da linha, ajustando o layout em dispositivos de diferentes tamanhos -->
+            <!-- Formulário para editar o perfil, com método POST e suporte a envio de arquivos -->
+            <form method="POST" action="" class="border p-4 mt-2" enctype="multipart/form-data">
+                {{ form.csrf_token }}  <!-- Token CSRF para segurança contra ataques de falsificação -->
+                <legend>Editar Perfil</legend>  <!-- Título da seção do formulário -->
 
-{% block form_editar_perfil %}
+                <fieldset>  <!-- Agrupando os campos do formulário -->
 
-<div class="container">
-        <hr>
-        <div class="row">
-            <div class="col">
-                <form method="POST" action="" class="border p-4 mt-2" enctype="multipart/form-data">
-                    {{ form.csrf_token }}
-                    <legend>Editar Perfil</legend>
-                    <fieldset>
-                        <div class="form-group">
-                            {{ form.username.label(class="form-control-label") }}
-                            {% if form.username.errors %}
-                                {{ form.username(class="form-control is-invalid") }}
+                    <!-- Campo para editar o nome de usuário -->
+                    <div class="form-group">
+                        {{ form.username.label(class="form-control-label") }}  <!-- Label do campo username -->
+                        {% if form.username.errors %}  <!-- Verifica se o campo tem erros -->
+                            <!-- Exibe o campo de nome de usuário com a classe 'is-invalid' para mostrar o erro -->
+                            {{ form.username(class="form-control is-invalid") }}
                             <div class="invalid-feedback">
                                 {% for erro in form.username.errors %}
-                                    {{ erro }}
+                                    {{ erro }}  <!-- Exibe os erros do campo username -->
                                 {% endfor %}
                             </div>
-                            {% else %}
-                                {{ form.username(class="form-control") }}
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            {{ form.email.label(class="form-control-label") }}
-                            {% if form.email.errors %}
-                                {{ form.email(class="form-control is-invalid") }}
+                        {% else %}
+                            <!-- Exibe o campo de nome de usuário sem erros -->
+                            {{ form.username(class="form-control") }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Campo para editar o e-mail -->
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}  <!-- Label do campo email -->
+                        {% if form.email.errors %}  <!-- Verifica se o campo tem erros -->
+                            <!-- Exibe o campo de e-mail com a classe 'is-invalid' para mostrar o erro -->
+                            {{ form.email(class="form-control is-invalid") }}
                             <div class="invalid-feedback">
                                 {% for erro in form.email.errors %}
-                                    {{ erro }}
+                                    {{ erro }}  <!-- Exibe os erros do campo email -->
                                 {% endfor %}
                             </div>
-                            {% else %}
-                                {{ form.email(class="form-control") }}
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            {{ form.foto_perfil.label }}
-                            {{ form.foto_perfil(class="form-control-file") }}
-                            {% if form.foto_perfil.errors %}
-                                {% for erro in form.foto_perfil.errors %}
-                                    <span class="text-danger">{{ erro }}</span><br>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        <hr>
-                        <p>Cursos</p>
-                        {% for campo in form %}
-                            {% if 'curso_' in campo.name %}
-                                <div class="form-group">
-                                    {{ campo(class="form-check-input") }}
-                                    {{ campo.label(class="form-check-label") }}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    </fieldset>
-                    {{ form.botao_submit_editarperfil(class="btn btn-primary mt-2") }}
-                </form>
-            </div>
+                        {% else %}
+                            <!-- Exibe o campo de e-mail sem erros -->
+                            {{ form.email(class="form-control") }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Campo para editar a foto de perfil -->
+                    <div class="form-group">
+                        {{ form.foto_perfil.label }}  <!-- Label do campo foto_perfil -->
+                        {{ form.foto_perfil(class="form-control-file") }}  <!-- Campo para upload de arquivo (foto de perfil) -->
+                        {% if form.foto_perfil.errors %}  <!-- Verifica se o campo foto_perfil tem erros -->
+                            {% for erro in form.foto_perfil.errors %}
+                                <span class="text-danger">{{ erro }}</span><br>  <!-- Exibe os erros de upload da foto em vermelho -->
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <hr>  <!-- Linha horizontal para separar seções -->
+                    <p>Cursos</p>  <!-- Texto informativo sobre a seção de cursos -->
+
+                    <!-- Loop para exibir campos de cursos -->
+                    {% for campo in form %}
+                        {% if 'curso_' in campo.name %}  <!-- Verifica se o campo é um dos relacionados aos cursos (campo com nome 'curso_') -->
+                            <div class="form-group">
+                                {{ campo(class="form-check-input") }}  <!-- Exibe o campo de curso como uma checkbox -->
+                                {{ campo.label(class="form-check-label") }}  <!-- Label associado ao campo de curso -->
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </fieldset>
+
+                <!-- Botão de submissão do formulário -->
+                {{ form.botao_submit_editarperfil(class="btn btn-primary mt-2") }}
+            </form>
         </div>
     </div>
-
-{% endblock %}
-
+</div>
+{% endblock %}  <!-- Fim do bloco 'form_editar_perfil' -->
