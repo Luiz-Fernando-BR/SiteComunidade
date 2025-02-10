@@ -1,43 +1,55 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  <!-- Herda o layout do template base.html -->
 
-{% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
+{% block body %}  <!-- Início do bloco 'body', que será sobrescrito no template base.html -->
+    <div class="container">  <!-- Container do Bootstrap para centralizar o conteúdo -->
+        <div class="row">  <!-- Definindo uma linha para o layout responsivo -->
+            <div class="col">  <!-- Coluna dentro da linha, ajustando o layout em dispositivos de diferentes tamanhos -->
+                <!-- Formulário para criação de um post, com método POST -->
                 <form method="POST" action="" class="border p-4 mt-2">
-                    {{ form.csrf_token }}
-                    <legend>Criar Post</legend>
-                    <fieldset>
+                    {{ form.csrf_token }}  <!-- Token CSRF para segurança contra ataques de falsificação -->
+                    <legend>Criar Post</legend>  <!-- Título da seção do formulário -->
+
+                    <fieldset>  <!-- Agrupando os campos do formulário -->
+
+                        <!-- Campo para título do post -->
                         <div class="form-group">
-                            {{ form.titulo.label(class="form-control-label") }}
-                            {% if form.titulo.errors %}
+                            {{ form.titulo.label(class="form-control-label") }}  <!-- Label do campo título -->
+                            {% if form.titulo.errors %}  <!-- Verifica se o campo tem erros -->
+                                <!-- Exibe o campo de título com a classe 'is-invalid' para mostrar o erro -->
                                 {{ form.titulo(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for erro in form.titulo.errors %}
-                                    {{ erro }}
-                                {% endfor %}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {% for erro in form.titulo.errors %}
+                                        {{ erro }}  <!-- Exibe os erros do campo título -->
+                                    {% endfor %}
+                                </div>
                             {% else %}
+                                <!-- Exibe o campo de título sem erros -->
                                 {{ form.titulo(class="form-control") }}
                             {% endif %}
                         </div>
+
+                         <!-- Campo para corpo do post -->
                          <div class="form-group">
-                            {{ form.corpo.label(class="form-control-label") }}
-                            {% if form.corpo.errors %}
+                            {{ form.corpo.label(class="form-control-label") }}  <!-- Label do campo corpo -->
+                            {% if form.corpo.errors %}  <!-- Verifica se o campo tem erros -->
+                                <!-- Exibe o campo de corpo com a classe 'is-invalid' para mostrar o erro -->
                                 {{ form.corpo(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for erro in form.corpo.errors %}
-                                    {{ erro }}
-                                {% endfor %}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {% for erro in form.corpo.errors %}
+                                        {{ erro }}  <!-- Exibe os erros do campo corpo -->
+                                    {% endfor %}
+                                </div>
                             {% else %}
+                                <!-- Exibe o campo de corpo sem erros -->
                                 {{ form.corpo(class="form-control") }}
                             {% endif %}
                         </div>
                     </fieldset>
+
+                    <!-- Botão de submissão do formulário -->
                     {{ form.botao_submit(class="btn btn-primary mt-2") }}
                 </form>
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock %}  <!-- Fim do bloco 'body' -->
