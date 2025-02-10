@@ -1,70 +1,72 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  <!-- Herda o layout do 'base.html' -->
 
+{% block body %}  <!-- Início do conteúdo principal da página -->
 
-{% block body %}
-
-        <div class="container mt-3">
-            <div class="row border mt-4 p-3 meupost">
-                <div class="col col-3">
-                    <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div>
-                    <strong>{{ post.autor.username }}</strong>
-                    <div class="row justify-content-center">
-                            {% for curso in post.autor.cursos.split(';') %}
-                                <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
-                            {% endfor %}
-                    </div>
+    <div class="container mt-3">
+        <div class="row border mt-4 p-3 meupost">
+            <div class="col col-3">
+                <div class="image pe-2"> 
+                    <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> 
+                </div>  <!-- Exibe a imagem de perfil do autor do post -->
+                <strong>{{ post.autor.username }}</strong>  <!-- Nome do autor do post -->
+                <div class="row justify-content-center">
+                    {% for curso in post.autor.cursos.split(';') %}  <!-- Exibe os cursos do autor -->
+                        <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>  <!-- Exibe cada curso como um botão -->
+                    {% endfor %}
                 </div>
-                <div class="col col-9">
-                    <h3>{{ post.titulo }}
-                    <small class="text-muted" style="font-size: 15px"> - Data de Criação: {{ post.data_criacao.strftime('%d/%m/%Y') }}
-                        {% if form %}
-                        - <a href="#form_editarpost">Editar Post</a> / <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#ExcluirPost">Excluir Post</a>
+            </div>
+            <div class="col col-9">
+                <h3>{{ post.titulo }}  <!-- Exibe o título do post -->
+                    <small class="text-muted" style="font-size: 15px">
+                        - Data de Criação: {{ post.data_criacao.strftime('%d/%m/%Y') }}  <!-- Exibe a data de criação do post -->
+                        {% if form %}  <!-- Verifica se o formulário está presente (indica que o post pode ser editado ou excluído) -->
+                            - <a href="#form_editarpost">Editar Post</a> / <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#ExcluirPost">Excluir Post</a>
                         {% endif %}
                     </small>
-                    </h3>
-                    <p>{{ post.corpo }}</p>
-                </div>
-
+                </h3>
+                <p>{{ post.corpo }}</p>  <!-- Exibe o corpo do post -->
             </div>
+
         </div>
+    </div>
 
-{% if form %}
+{% if form %}  <!-- Verifica se o formulário de edição está presente -->
 
-        <div class="container">
+    <div class="container">
         <div class="row">
             <div class="col">
                 <form method="POST" action="" id="form_editarpost" class="border p-4 mt-2">
-                    {{ form.csrf_token }}
+                    {{ form.csrf_token }}  <!-- Token de segurança do CSRF -->
                     <legend>Editar Post</legend>
                     <fieldset>
                         <div class="form-group">
-                            {{ form.titulo.label(class="form-control-label") }}
-                            {% if form.titulo.errors %}
+                            {{ form.titulo.label(class="form-control-label") }}  <!-- Rótulo para o campo título -->
+                            {% if form.titulo.errors %}  <!-- Verifica se há erros no campo título -->
                                 {{ form.titulo(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for erro in form.titulo.errors %}
-                                    {{ erro }}
-                                {% endfor %}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {% for erro in form.titulo.errors %}
+                                        {{ erro }}  <!-- Exibe os erros de validação para o título -->
+                                    {% endfor %}
+                                </div>
                             {% else %}
                                 {{ form.titulo(class="form-control") }}
                             {% endif %}
                         </div>
                          <div class="form-group">
-                            {{ form.corpo.label(class="form-control-label") }}
-                            {% if form.corpo.errors %}
+                            {{ form.corpo.label(class="form-control-label") }}  <!-- Rótulo para o campo corpo -->
+                            {% if form.corpo.errors %}  <!-- Verifica se há erros no campo corpo -->
                                 {{ form.corpo(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for erro in form.corpo.errors %}
-                                    {{ erro }}
-                                {% endfor %}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {% for erro in form.corpo.errors %}
+                                        {{ erro }}  <!-- Exibe os erros de validação para o corpo -->
+                                    {% endfor %}
+                                </div>
                             {% else %}
                                 {{ form.corpo(class="form-control") }}
                             {% endif %}
                         </div>
                     </fieldset>
-                    {{ form.botao_submit(class="btn btn-primary mt-2") }}
+                    {{ form.botao_submit(class="btn btn-primary mt-2") }}  <!-- Botão de envio do formulário -->
                 </form>
             </div>
         </div>
@@ -72,11 +74,7 @@
 
 {% endif %}
 
-
-
-
-
-<!-- Modal -->
+<!-- Modal para confirmação de exclusão do post -->
 <div class="modal fade" id="ExcluirPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -85,17 +83,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Você quer realmente excluir esse post? (Depois de executada, essa ação não pode ser desfeita !)
+        Você quer realmente excluir esse post? (Depois de executada, essa ação não pode ser desfeita !)  <!-- Mensagem de confirmação -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <form method="POST" action="{{ url_for('excluir_post', post_id=post.id) }}">
-            <button type="submit" class="btn btn-danger">Excluir Post</button>
-          </form>
+        <form method="POST" action="{{ url_for('excluir_post', post_id=post.id) }}">
+            <button type="submit" class="btn btn-danger">Excluir Post</button>  <!-- Botão para confirmar a exclusão do post -->
+        </form>
       </div>
     </div>
   </div>
 </div>
-
 
 {% endblock %}
