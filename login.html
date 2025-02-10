@@ -12,6 +12,7 @@
                     {{ form_login.csrf_token }}  <!-- Token CSRF para proteção contra ataques -->
                     <legend>Login</legend>  <!-- Título do formulário de login -->
                     <fieldset>  <!-- Campo agrupando os elementos do formulário -->
+                        
                         <div class="form-group">  <!-- Campo de entrada para o e-mail -->
                             {{ form_login.email.label(class="form-control-label") }}  <!-- Rótulo para o campo de e-mail -->
                             {% if form_login.email.errors %}  <!-- Verifica se existem erros no campo de e-mail -->
@@ -25,6 +26,7 @@
                                 {{ form_login.email(class="form-control") }}  <!-- Exibe o campo de e-mail sem erros -->
                             {% endif %}
                         </div>
+                        
                         <div class="form-group">  <!-- Campo de entrada para a senha -->
                             {{ form_login.senha.label(class="form-control-label") }}  <!-- Rótulo para o campo de senha -->
                             {% if form_login.senha.errors %}  <!-- Verifica se existem erros no campo de senha -->
@@ -38,6 +40,7 @@
                                 {{ form_login.senha(class="form-control") }}  <!-- Exibe o campo de senha sem erros -->
                             {% endif %}
                         </div>
+                        
                         <div class="form-group">  <!-- Checkbox para lembrar dados -->
                             {{ form_login.lembrar_dados.label(class="form-check-label") }}  <!-- Rótulo para o checkbox -->
                             {{ form_login.lembrar_dados(class="form-check-input") }}  <!-- Campo checkbox para lembrar dados -->
@@ -64,6 +67,7 @@
                                 {{ form_criarconta.username(class="form-control") }}  <!-- Exibe o campo de nome de usuário sem erros -->
                             {% endif %}
                         </div>
+                        
                         <div class="form-group">  <!-- Campo de entrada para o e-mail -->
                             {{ form_criarconta.email.label(class="form-control-label") }}  <!-- Rótulo para o campo de e-mail -->
                             {% if form_criarconta.email.errors %}  <!-- Verifica se existem erros no campo de e-mail -->
@@ -77,6 +81,7 @@
                                 {{ form_criarconta.email(class="form-control") }}  <!-- Exibe o campo de e-mail sem erros -->
                             {% endif %}
                         </div>
+                        
                         <div class="form-group">  <!-- Campo de entrada para a senha -->
                             {{ form_criarconta.senha.label(class="form-control-label") }}  <!-- Rótulo para o campo de senha -->
                             {% if form_criarconta.senha.errors %}  <!-- Verifica se existem erros no campo de senha -->
@@ -90,6 +95,7 @@
                                 {{ form_criarconta.senha(class="form-control") }}  <!-- Exibe o campo de senha sem erros -->
                             {% endif %}
                         </div>
+                        
                         <div class="form-group">  <!-- Campo de entrada para confirmação de senha -->
                             {{ form_criarconta.confirmacao_senha.label(class="form-control-label") }}  <!-- Rótulo para o campo de confirmação de senha -->
                             {% if form_criarconta.confirmacao_senha.errors %}  <!-- Verifica se existem erros no campo de confirmação de senha -->
