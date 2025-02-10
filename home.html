@@ -1,30 +1,40 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}  <!-- Herda o layout do template base.html -->
 
+{% block body %}  <!-- Início do bloco 'body', que será sobrescrito no template base.html -->
 
-{% block body %}
+    <div class="container mt-3">  <!-- Container do Bootstrap com margem superior -->
+        <!-- Título principal da página -->
+        <h1 style="color: orange">Comunidade Hub do Conhecimento</h1>
+        <h2>Conectando mentes e compartilhando expertise. Um espaço para trocar conhecimentos!</h2>
+        <hr>  <!-- Linha horizontal para separar seções -->
 
-        <div class="container mt-3">
-            <h1 style="color: orange">Comunidade Hub do Conhecimento</h1>
-            <h2>Conectando mentes e compartilhando expertise. Um espaço para trocar conhecimentos ! </h2>
-            <hr>
-            {% for post in posts %}
-            <div class="row border mt-4 p-3 meupost">
-                <div class="col col-3">
-                    <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div>
-                    <strong>{{ post.autor.username }}</strong>
-                    <div class="row justify-content-center">
-                            {% for curso in post.autor.cursos.split(';') %}
-                                <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
-                            {% endfor %}
-                    </div>
+        <!-- Loop que exibe cada post da lista de posts -->
+        {% for post in posts %}
+        <div class="row border mt-4 p-3 meupost">  <!-- Linha com borda e espaçamento para cada post -->
+            <div class="col col-3">  <!-- Coluna para a imagem de perfil e informações do autor -->
+                <div class="image pe-2">  
+                    <!-- Exibe a imagem de perfil do autor com uma largura de 200px e bordas arredondadas -->
+                    <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200">
                 </div>
-                <div class="col col-9">
-                    <a style="text-decoration: none" href="{{ url_for('exibir_post', post_id=post.id) }}"><h3>{{ post.titulo }}</h3></a>
-                    <p>{{ post.corpo }}</p>
+                <strong>{{ post.autor.username }}</strong>  <!-- Exibe o nome de usuário do autor -->
+                
+                <div class="row justify-content-center">  <!-- Linha para exibir os cursos do autor -->
+                    {% for curso in post.autor.cursos.split(';') %}  <!-- Divide os cursos por ';' e exibe cada um como botão desabilitado -->
+                        <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
+                    {% endfor %}
                 </div>
-
             </div>
-            {% endfor %}
-        </div>
 
-{% endblock %}
+            <div class="col col-9">  <!-- Coluna para o título e corpo do post -->
+                <!-- Link para exibir o post completo ao clicar no título -->
+                <a style="text-decoration: none" href="{{ url_for('exibir_post', post_id=post.id) }}">
+                    <h3>{{ post.titulo }}</h3>  <!-- Exibe o título do post -->
+                </a>
+                <p>{{ post.corpo }}</p>  <!-- Exibe um resumo do corpo do post -->
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}  <!-- Fim do bloco 'body' -->
